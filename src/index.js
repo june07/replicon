@@ -58,7 +58,7 @@ async function resizeAndExportSVG(inputFile, outputDir, baseResolutions) {
 
     await fs.mkdir(outputDir, { recursive: true })
     for (const resolution of baseResolutions) {
-        const magnifications = [1, 2] // 1x and 2x magnification
+        const magnifications = [1, 2, 3] // 1x, 2x, and 3x magnification
         for (const magnification of magnifications) {
             const outputFilename = `icon${resolution}${magnification === 1 ? '' : `@${magnification}x`}.png`
             const outputPath = path.join(outputDir, outputFilename)
