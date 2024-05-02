@@ -1,22 +1,23 @@
 {
 	"name": "@667/replicon",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "CLI tool to resize and export SVG logo to PNG files with different sizes and magnifications.",
-	"main": "./dist/index.js",
+	"main": "./src/index.js",
 	"type": "module",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "rimraf dist && mkdir dist && terser ./src/index.js -o dist/index.min.js"
+		"test": "node dist/index.min.js -s",
+		"build": "rimraf dist && mkdir dist && terser ./src/index.js -o dist/index.min.js",
+		"publish": "npm test && npm version patch && npm publish"
 	},
 	"author": "June07 <667@june07.com> (https://june07.com/)",
 	"license": "MIT",
 	"bin": {
-		"replicon": "./src/index.js"
+		"replicon": "./dist/index.js"
 	},
 	"exports": {
 		"default": "./dist/index.min.js"
 	},
-    "files": [
+	"files": [
 		"src/index.js"
 	],
 	"keywords": [
