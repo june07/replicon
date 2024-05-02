@@ -5,7 +5,7 @@
 	"main": "./src/index.js",
 	"type": "module",
 	"scripts": {
-		"test": "node dist/index.min.js -s",
+		"test": "npm build && node dist/index.min.js -s",
 		"build": "rimraf dist && mkdir dist && terser ./src/index.js -o dist/index.min.js",
 		"publish": "npm test && npm version patch && npm publish"
 	},
