@@ -5,9 +5,9 @@
 	"main": "./src/index.js",
 	"type": "module",
 	"scripts": {
-		"test": "npm build && node dist/index.min.js -s",
+		"test": "npm run build && node dist/index.min.js -s",
 		"build": "rimraf dist && mkdir dist && terser ./src/index.js -o dist/index.min.js",
-		"publish": "npm test && npm version patch && npm publish"
+		"publish": "npm run test && npm version patch && npm publish"
 	},
 	"author": "June07 <667@june07.com> (https://june07.com/)",
 	"license": "MIT",
