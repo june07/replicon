@@ -31,7 +31,9 @@
 		"icon",
 		"manifest",
 		"replicate",
-		"generate"
+		"generate",
+        "inkscape",
+        "gimp"
 	],
 	"dependencies": {
 		"readline": "^1.3.0",
