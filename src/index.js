@@ -30,6 +30,11 @@ const argv = yargs(hideBin(process.argv))
         describe: 'Silently continue with defaults without prompting the user',
         type: 'boolean'
     })
+    .option('magnifications', {
+        alias: 'm',
+        describe: 'Magnifications for the PNG files (comma-separated)',
+        type: 'string'
+    })
     .help()
     .argv
 
@@ -53,12 +58,11 @@ async function promptUserForConfirmation(logoFile) {
     })
 }
 
-async function resizeAndExportSVG(inputFile, outputDir, baseResolutions) {
+async function resizeAndExportSVG(inputFile, outputDir, baseResolutions, magnifications) {
     const svgBuffer = await fs.readFile(inputFile)
 
     await fs.mkdir(outputDir, { recursive: true })
     for (const resolution of baseResolutions) {
-        const magnifications = [1, 2, 3] // 1x, 2x, and 3x magnification
         for (const magnification of magnifications) {
             const outputFilename = `icon${resolution}${magnification === 1 ? '' : `@${magnification}x`}.png`
             const outputPath = path.join(outputDir, outputFilename)
@@ -76,6 +80,7 @@ async function main() {
     const baseResolutions = argv['base-resolutions'].split(',').map(Number)
     const logoFile = argv.input || await detectLogoInCurrentDirectory()
     const outputDirectory = argv['output-dir']
+    const magnifications = argv['magnifications'] || [1]
 
     if (!logoFile) {
         console.error('Error: No logo file found in the current directory or specified as an argument.')
@@ -90,7 +95,7 @@ async function main() {
         }
     }
 
-    resizeAndExportSVG(logoFile, outputDirectory, baseResolutions)
+    resizeAndExportSVG(logoFile, outputDirectory, baseResolutions, magnifications)
         .then(() => console.log('All PNG files exported successfully'))
         .catch(error => console.error('Error exporting PNG files:', error))
 }
