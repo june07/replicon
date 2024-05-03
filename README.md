@@ -14,6 +14,8 @@ Exported icon128.png
 Exported icon128@2x.png
 All PNG files exported successfully
 ```
-![image](https://github.com/june07/replicon/assets/11353590/d629548b-7890-4910-a8b9-b139f9626a18)
+![image](https://github.com/june07/replicon/assets/11353590/84da004f-4caf-4ae2-aabe-78f1de0e1301)
+
+![image](https://github.com/june07/replicon/assets/11353590/919fd2c5-9d8c-4ec5-b3c0-0b9e8188e281)
 
 Because I got tired of manually replicating (resize, export, repeat) icons using Inkscape and/or Gimp!
