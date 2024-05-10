@@ -98,11 +98,15 @@ async function main(params) {
         }
     }
 
-    resizeAndExportSVG(logoFile, outputDirectory, baseResolutions, magnifications)
+    return resizeAndExportSVG(logoFile, outputDirectory, baseResolutions, magnifications)
         .then(() => console.log('All PNG files exported successfully'))
         .catch(error => console.error('Error exporting PNG files:', error))
 }
 
 main()
 
-export default main
+const replicate = main
+
+export {
+    replicate
+}
