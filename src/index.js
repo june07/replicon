@@ -76,22 +76,25 @@ async function resizeAndExportSVG(inputFile, outputDir, baseResolutions, magnifi
     }
 }
 
-async function main() {
-    const baseResolutions = argv['base-resolutions'].split(',').map(Number)
-    const logoFile = argv.input || await detectLogoInCurrentDirectory()
-    const outputDirectory = argv['output-dir']
-    const magnifications = argv['magnifications'] || [1]
+async function main(params) {
+    const baseResolutions = params.baseResolutions || argv['base-resolutions'].split(',').map(Number)
+    const logoFile = params.logoFile || argv.input || await detectLogoInCurrentDirectory()
+    const outputDirectory = params.outputDirectory || argv['output-dir']
+    const magnifications = params.magnifications || argv['magnifications'] || [1]
 
     if (!logoFile) {
         console.error('Error: No logo file found in the current directory or specified as an argument.')
-        process.exit(1)
+        if (require.main === module) { // Check if being executed as a CLI
+            process.exit(1)
+        } else {
+            throw new Error('No logo file found.')
+        }
     }
 
-    if (!argv.input && await detectLogoInCurrentDirectory() && !argv.silent) {
+    if (require.main === module && !argv.input && await detectLogoInCurrentDirectory() && !argv.silent) {
         const confirmed = await promptUserForConfirmation(logoFile)
         if (!confirmed) {
             console.log('Operation canceled by the user.')
-            process.exit(0)
         }
     }
 
