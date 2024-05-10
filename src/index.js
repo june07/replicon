@@ -77,21 +77,21 @@ async function resizeAndExportSVG(inputFile, outputDir, baseResolutions, magnifi
 }
 
 async function main(params) {
-    const baseResolutions = params.baseResolutions || argv['base-resolutions'].split(',').map(Number)
-    const logoFile = params.logoFile || argv.input || await detectLogoInCurrentDirectory()
-    const outputDirectory = params.outputDirectory || argv['output-dir']
-    const magnifications = params.magnifications || argv['magnifications'] || [1]
+    const baseResolutions = params?.baseResolutions || argv['base-resolutions'].split(',').map(Number)
+    const logoFile = params?.logoFile || argv.input || await detectLogoInCurrentDirectory()
+    const outputDirectory = params?.outputDirectory || argv['output-dir']
+    const magnifications = params?.magnifications || argv['magnifications'] || [1]
 
     if (!logoFile) {
         console.error('Error: No logo file found in the current directory or specified as an argument.')
-        if (require.main === module) { // Check if being executed as a CLI
+        if (import.meta.url === `file://${process.argv[1]}`) { // Check if being executed as a CLI
             process.exit(1)
         } else {
             throw new Error('No logo file found.')
         }
     }
 
-    if (require.main === module && !argv.input && await detectLogoInCurrentDirectory() && !argv.silent) {
+    if (import.meta.url === `file://${process.argv[1]}` && !argv.input && await detectLogoInCurrentDirectory() && !argv.silent) {
         const confirmed = await promptUserForConfirmation(logoFile)
         if (!confirmed) {
             console.log('Operation canceled by the user.')
