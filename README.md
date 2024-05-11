@@ -7,6 +7,10 @@ Replicon (replicate icon) is a CLI tool to resize and export SVG logo to PNG fil
 or use npx...
 `npx @667/replicon --help`
 
+# Web UI
+You can either use it from the CLI as per the usage below or online:
+https://replicon.june07.com/
+
 # Usage:
 ```
 $ npx @667/replicon --help
