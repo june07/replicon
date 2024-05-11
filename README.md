@@ -1,5 +1,5 @@
 # Replicon
-Replicon (replicate icon) is a CLI tool to resize and export SVG logo to PNG files with different sizes and magnifications.
+Replicon (replicate icon) is a CLI tool to resize and export SVG files to other bitmap formats (including PNG, AVIF, GIF, HEIF, JP2, JXL, JPEG, RAW, TIFF, and WEBP).
 
 # Installation
 
@@ -24,6 +24,8 @@ Options:
   -s, --silent            Silently continue with defaults without prompting the
                           user                                         [boolean]
   -m, --magnifications    Magnifications for the PNG files (comma-separated)
+  -f, --output-format     Output image format
+                                            [string] [default: "png"]
                                                                         [string]
       --help              Show help                                    [boolean]
 ```
