@@ -25,6 +25,12 @@ const argv = yargs(hideBin(process.argv))
         default: path.join(process.cwd(), 'icons'),
         type: 'string'
     })
+    .option('output-format', {
+        alias: 'f',
+        describe: 'Output image file format',
+        default: 'png',
+        type: 'string'
+    })
     .option('silent', {
         alias: 's',
         describe: 'Silently continue with defaults without prompting the user',
@@ -58,17 +64,18 @@ async function promptUserForConfirmation(logoFile) {
     })
 }
 
-async function resizeAndExportSVG(inputFile, outputDir, baseResolutions, magnifications) {
+async function resizeAndExportSVG(inputFile, outputDir, outputFormat, baseResolutions, magnifications) {
     const svgBuffer = await fs.readFile(inputFile)
 
     await fs.mkdir(outputDir, { recursive: true })
     for (const resolution of baseResolutions) {
         for (const magnification of magnifications) {
-            const outputFilename = `icon${resolution}${magnification === 1 ? '' : `@${magnification}x`}.png`
+            const outputFilename = `icon${resolution}${magnification === 1 ? '' : `@${magnification}x`}.${outputFormat}`
             const outputPath = path.join(outputDir, outputFilename)
 
             await sharp(svgBuffer)
                 .resize(resolution * magnification, resolution * magnification)
+                .toFormat(outputFormat)
                 .toFile(outputPath)
 
             console.log(`Exported ${outputFilename}`)
@@ -81,6 +88,7 @@ async function main(params) {
     const logoFile = params?.logoFile || argv.input || await detectLogoInCurrentDirectory()
     const outputDirectory = params?.outputDirectory || argv['output-dir']
     const magnifications = params?.magnifications || argv['magnifications'] || [1]
+    const outputFormat = params?.outputFormat || argv['output-format'] || 'png'
 
     if (!logoFile) {
         console.error('Error: No logo file found in the current directory or specified as an argument.')
@@ -98,9 +106,9 @@ async function main(params) {
         }
     }
 
-    return resizeAndExportSVG(logoFile, outputDirectory, baseResolutions, magnifications)
-        .then(() => console.log('All PNG files exported successfully'))
-        .catch(error => console.error('Error exporting PNG files:', error))
+    return resizeAndExportSVG(logoFile, outputDirectory, outputFormat, baseResolutions, magnifications)
+        .then(() => console.log(`All ${outputFormat} files exported successfully`))
+        .catch(error => console.error(`Error exporting ${outputFormat} files:`, error))
 }
 
 main()
